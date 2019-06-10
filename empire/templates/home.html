@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Maxi Battery Empire</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slider.css' %}">
+
+    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="{% static 'js/slider.js' %}"></script>
+</head>
+
+<body>
+
+    <header class="header-fixed">
+
+        <div class="header-limiter">
+
+            <h1>
+                <a href="#"><img src="{% static 'img/logo.png' %}" /></a>
+            </h1>
+
+            <nav>
+                <a href="#" class="selected">Home</a>
+                <a href="#">Product</a>
+                <a href="#">Contact</a>
+            </nav>
+
+        </div>
+
+    </header>
+    </br>
+    </br>
+
+
+
+    <div id="slideshow">
+        <div>
+            <img src="{% static 'img/banner/banner1.jpg' %}">
+        </div>
+        <div>
+            <img src="{% static 'img/banner/banner1.jpg' %}">
+        </div>
+        <div>
+            Pretty cool eh? This slide is proof the content can be anything.
+        </div>
+    </div>
+
+
+
+    {% if shop %} {% for shop_detail in shop %}
+    <footer id="myFooter">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-3 myCols">
+                    <h5> About us &trade;</h5>
+                    <br/>
+                    <ul>
+                        <li><a href="#">{{shop_detail.about_us}}</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-sm-3 myCols">
+                    <h5 class="fa fa-home"> Address</h5><br/><br/>
+                    <ul>
+                        <li><a>{{shop_detail.address1|linebreaksbr}}</a></li>
+                        <li><a>{{shop_detail.timing}}</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="col-sm-3 myCols">
+                    <h5 class="fa fa-phone"> Help Desk
+
+                    </h5><br/><br/>
+                    <ul>
+                        <li><a>  {{shop_detail.phone_number1}}</a></li>
+                        <li><a>{{shop_detail.phone_number2}}</a></li>
+                        <li><a>{{shop_detail.email}}</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-3 myCols">
+                    <h5>Legal &#9878;</h5><br/>
+                    <ul>
+                        <li><a>Terms of Service</a></li>
+                        <li><a>Terms of Use</a></li>
+                        <li><a>Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="social-networks">
+            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="facebook"><i class="fa fa-facebook-official"></i></a>
+            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+        </div>
+        <div class="footer-copyright">
+            <p>Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script> All rights reserved With <i class="fa fa-heart-o" aria-hidden="true" style="color:#ffc900"></i> by <a href="#" target="_blank" style="color:#ffc900">Maxi Battery</a></p>
+        </div>
+    </footer>
+
+    {% endfor %} {% endif %}
+
+</body>
+
+</html>
