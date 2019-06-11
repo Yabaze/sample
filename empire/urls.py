@@ -17,8 +17,8 @@ router.register(r'feedback', FeedBackDetailsViewSet)
 
 urlpatterns = [
      path('', views.index, name='index'),
-     url(r'customview', CustomView.as_view()),
-     path('cool',views.questions_view),
+     url('customview', CustomView.as_view()),
+     path('rest/api/v1/footerDetails',views.footerDetails),
 ] 
 
 urlpatterns += router.urls
