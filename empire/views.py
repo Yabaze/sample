@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated ,IsAuthenticatedOrReadOnly ,BasePermission , SAFE_METHODS
 
 import json
 
@@ -15,6 +16,11 @@ from .serializers import UserLoginSerializer, ShopDetailserializer ,FeedBackDeta
 from rest_framework.views import APIView, Response
 
 responseDictionary = {'requestKey':None,'queueData':None,'transactionId':None} 
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
 def index(request):
     date_modified = datetime.now()
     b = UserLogin(first_name='T', middle_name = 'Mirakle',last_name='Yabaze',username = 'cool.mirakle@hotmail.com',password = '123456',created_time = date_modified)
@@ -23,7 +29,7 @@ def index(request):
     try:
         for i in shopDetails:
             i.address1 = i.address1.replace(",","\n")
-        return render(request, 'home.html', {'users': ShopDetailserializer,'shop':shopDetails})
+        return render(request, 'empire/home.html', {'users': ShopDetailserializer,'shop':shopDetails})
     except:
         return HttpResponse("Data Saved Successfully")        
  
@@ -42,6 +48,7 @@ class FeedBackDetailsViewSet(viewsets.ModelViewSet):
 
 
 class CustomView(APIView):
+    permission_classes = (IsAuthenticated, ReadOnly,)
     def get(self, request, format=None):
         queryset = UserLogin.objects.all()
         return Response("cool")
@@ -50,19 +57,21 @@ class CustomView(APIView):
         return Response("Some Post Response")    
 
 
-@api_view(['GET','POST'])
-def questions_view(request):
+@api_view(['GET'])
+def questions_view(request):        
+    permission_classes = (IsAuthenticated,ReadOnly)
     if request.method == 'GET':
-        responseDictionary = {}
+        #responseDictionary = {}
         responseDictionary['statusCode']=200
         responseDictionary['statusMessage']='Success'
         responseDictionary['data'] = {}
         for question in ShopDetails.objects.all():
-            question_representation = {'about_us': question.about_us,'address1': question.address1}
+            question_representation = {'about_us': question.about_us,
+                'address1': question.address1}
             responseDictionary['data'].update(question_representation)
         return HttpResponse(json.dumps(responseDictionary), content_type='application/json')
     else:    
-        responseDictionary = {}
+        #responseDictionary = {}
         responseDictionary['statusCode']=404
         responseDictionary['statusMessage']='Failure'
         responseDictionary['data']='Method Not Allowed'

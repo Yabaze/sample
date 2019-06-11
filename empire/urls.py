@@ -23,7 +23,7 @@ urlpatterns = [
 
 urlpatterns += router.urls
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
-else :
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+# if settings.DEBUG:
+urlpatterns += static('/empire/static/empire', document_root=settings.STATIC_ROOT) 
+# else :
+    # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
